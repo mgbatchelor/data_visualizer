@@ -8,19 +8,19 @@ var Aggregate = Stapes.subclass({
     if( !this.data[data.source] ) {
       this.data[data.source] = {};
     }
-    if( !this.data[data.source][data.to] ) {
-      this.data[data.source][data.to] = 0;
+    if( !this.data[data.source][data.destination] ) {
+      this.data[data.source][data.destination] = 0;
     }
-    this.data[data.source][data.to] += 1;
+    this.data[data.source][data.destination] += 1;
     this.redraw();
   },
 
   redraw : function() {
     $('#data').html('');
     var data = this.data;
-    Object.keys(data).forEach(function(from) {
-      Object.keys(data[from]).forEach(function(to) {
-        $('#data').append('<tr><td>' + from + '</td><td>' + to + '</td><td>' + data[from][to] + '</td></tr>');
+    Object.keys(data).forEach(function(source) {
+      Object.keys(data[source]).forEach(function(destination) {
+        $('#data').append('<tr><td>' + source + '</td><td>' + destination + '</td><td>' + data[source][destination] + '</td></tr>');
       });
     });
   },
