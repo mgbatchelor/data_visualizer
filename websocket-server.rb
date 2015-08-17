@@ -11,7 +11,7 @@ EM.run do
 
   EM.open_datagram_socket('0.0.0.0', 33333, Client)
 
-  EM::WebSocket.run(host: "0.0.0.0", port: 8080) do |ws|
+  EM::WebSocket.run(host: "0.0.0.0", port: 8765) do |ws|
     ws.onopen do
       sid = $channel.subscribe { |msg| ws.send msg }
       ws.onclose { $channel.unsubscribe(sid) }

@@ -18,7 +18,7 @@ var Websocket = Stapes.subclass({
     } else {
       var socket;
       try {
-        socket = new WebSocket("ws://localhost:8080/");
+        socket = new WebSocket("ws://0.0.0.0:8765/");
         this.event(socket.readyState, "Begin");
         socket.onopen = function(){
           this.event(socket.readyState, "Open");

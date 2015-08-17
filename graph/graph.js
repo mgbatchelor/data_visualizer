@@ -28,25 +28,31 @@ var Graph = Stapes.subclass({
   },
 
   handleEvent : function(data) {
+    var needs_layout = false;
     if( !this.nodes[data.source] ) {
       var node = this.cy.add({ group: "nodes", data: { id: data.source } });
+      needsLayout = true;
       this.nodes[data.source] = node;
     }
     if( !this.nodes[data.destination] ) {
       var node = this.cy.add({ group: "nodes", data: { id: data.destination } });
+      needsLayout = true;
       this.nodes[data.destination] = node;
     }
     var edge_key = data.source + data.destination;
     if( !this.edges[edge_key] ) {
       var edge = this.cy.add({ group: "edges", data: { id: edge_key, source: data.source, target: data.destination }});
+      needsLayout = true;
       this.edges[edge_key] = edge;
     }
     setTimeout(function(){
       this.edges[edge_key].addClass('highlighted');
       setTimeout(function() {
         this.edges[edge_key].removeClass('highlighted');
-      }.bind(this), 1000);
+      }.bind(this), 500);
     }.bind(this));
-    this.cy.layout({name: 'circle'});
+    if( needsLayout ) {
+      this.cy.layout({name: 'circle'});
+    }
   }
 });
