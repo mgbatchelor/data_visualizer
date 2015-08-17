@@ -29,24 +29,24 @@ var Graph = Stapes.subclass({
 
   handleEvent : function(data) {
     if( !this.nodes[data.source] ) {
-      this.cy.add({ group: "nodes", data: { id: data.source } });
-      this.nodes[data.source] = data.id;
+      var node = this.cy.add({ group: "nodes", data: { id: data.source } });
+      this.nodes[data.source] = node;
     }
     if( !this.nodes[data.destination] ) {
-      this.cy.add({ group: "nodes", data: { id: data.destination } });
-      this.nodes[data.destination] = data.id;
+      var node = this.cy.add({ group: "nodes", data: { id: data.destination } });
+      this.nodes[data.destination] = node;
     }
     var edge_key = data.source + data.destination;
     if( !this.edges[edge_key] ) {
       var edge = this.cy.add({ group: "edges", data: { id: edge_key, source: data.source, target: data.destination }});
-      setTimeout(function(){
-        edge.addClass('highlighted');
-        setTimeout(function() {
-          edge.removeClass('highlighted');
-        }, 1000);
-      });
-      this.edges[edge_key] = data.id;
+      this.edges[edge_key] = edge;
     }
+    setTimeout(function(){
+      this.edges[edge_key].addClass('highlighted');
+      setTimeout(function() {
+        this.edges[edge_key].removeClass('highlighted');
+      }.bind(this), 1000);
+    }.bind(this));
     this.cy.layout({name: 'circle'});
   }
 });
