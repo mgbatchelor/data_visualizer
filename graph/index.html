@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>WebSockets Client</title>
+    <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+    <script src="http://cytoscape.github.io/cytoscape.js/api/cytoscape.js-latest/cytoscape.min.js"></script>
+    <script src="https://hay.github.io/stapes/stapes.min.js"></script>
+    <script src="websocket.js"></script>
+    <script src="graph.js"></script>
+    <link href="style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="graph"></div>
+    <table id="data" border=1></table>
+    <div id="chatLog"></div>
+  </body>
+</html>
+
+<script>
+  $(function() {
+    var websocket = new Websocket();
+    websocket.connect();
+
+    var graph = new Graph();
+    websocket.on('event', function(data){
+      graph.handleEvent(data);
+    });
+  });
+</script>

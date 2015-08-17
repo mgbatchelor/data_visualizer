@@ -1,0 +1,12 @@
+.event {
+  color:#999;
+}
+.warning{
+  font-weight:bold;
+  color:#CCC;
+}
+
+#graph {
+  width: 400px;
+  height: 400px;
+}
