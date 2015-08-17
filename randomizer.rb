@@ -1,10 +1,9 @@
-require 'redis'
 require 'csv'
 require 'json'
-
-redis = Redis.new
+require 'socket'
 
 CSV.read('test-data.csv', headers: true).each do |row|
-  redis.publish('ws', row.to_hash.to_json)
-  sleep rand(5)
+  socket = UDPSocket.new
+  socket.send row.to_hash.to_json, 0, "0.0.0.0", 33333
+  sleep 0.5
 end

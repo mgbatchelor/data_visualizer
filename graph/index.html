@@ -7,23 +7,26 @@
     <script src="https://hay.github.io/stapes/stapes.min.js"></script>
     <script src="websocket.js"></script>
     <script src="graph.js"></script>
+    <script src="aggregate.js"></script>
     <link href="style.css" rel="stylesheet" />
   </head>
   <body>
     <div id="graph"></div>
     <table id="data" border=1></table>
-    <div id="chatLog"></div>
   </body>
 </html>
 
 <script>
   $(function() {
+    var graph = new Graph();
+    var aggregate = new Aggregate();
+
     var websocket = new Websocket();
     websocket.connect();
 
-    var graph = new Graph();
     websocket.on('event', function(data){
       graph.handleEvent(data);
+      aggregate.handleEvent(data);
     });
   });
 </script>

@@ -23,35 +23,30 @@ var Graph = Stapes.subclass({
             'transition-property': 'background-color, line-color, target-arrow-color'
           }),
 
-      layout: {
-        name: 'cose',
-        directed: true,
-        roots: '#Pink',
-        padding: 10
-      }
+      layout: {name: 'circle'}
     });
   },
 
   handleEvent : function(data) {
-    if( !this.nodes[data.from_color] ) {
-      this.cy.add({ group: "nodes", data: { id: data.from_color } });
-      this.nodes[data.from_color] = data.id;
+    if( !this.nodes[data.source] ) {
+      this.cy.add({ group: "nodes", data: { id: data.source } });
+      this.nodes[data.source] = data.id;
     }
-    if( !this.nodes[data.to_color] ) {
-      this.cy.add({ group: "nodes", data: { id: data.to_color } });
-      this.nodes[data.to_color] = data.id;
+    if( !this.nodes[data.destination] ) {
+      this.cy.add({ group: "nodes", data: { id: data.destination } });
+      this.nodes[data.destination] = data.id;
     }
-    var edge_key = data.from_color + data.to_color;
+    var edge_key = data.source + data.destination;
     if( !this.edges[edge_key] ) {
-      var edge = this.cy.add({ group: "edges", data: { id: edge_key, source: data.from_color, target: data.to_color }});
+      var edge = this.cy.add({ group: "edges", data: { id: edge_key, source: data.source, target: data.destination }});
       setTimeout(function(){
         edge.addClass('highlighted');
         setTimeout(function() {
           edge.removeClass('highlighted');
-        }, 5000);
+        }, 1000);
       });
       this.edges[edge_key] = data.id;
     }
-    this.cy.layout({ name: 'cose' });
+    this.cy.layout({name: 'circle'});
   }
 });
